@@ -47,8 +47,6 @@
       "Bash(rm:*)"
     ]
   },
-  "enableAllProjectMcpServers": true,
-  "enabledMcpjsonServers": ["deepwiki", "playwright", "context7"],
   "enabledPlugins": {
     "github@claude-plugins-official": true
   }

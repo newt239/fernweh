@@ -54,7 +54,7 @@ CVSS は到達性を超えてティアを引き上げない (不到達の CVSS 1
 
 | GHSA/CVE            | package@ver     | path                                                                                                  | CVSS    | tier | 到達性判定                                                                   | 再エスカレーション trigger                                                                                                        | 期限       | links                                                                    |
 | ------------------- | --------------- | ----------------------------------------------------------------------------------------------------- | ------- | ---- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------------------------------------------------------------------ |
-| GHSA-67mh-4wv8-2f99 | esbuild@0.18.20 | drizzle-kit@0.31.10 > @esbuild-kit/esm-loader@2.6.5 > @esbuild-kit/core-utils@3.3.2 > esbuild@0.18.20 | 5.3 (M) | P3   | build 専用・`esbuild serve` 未使用・本番は patched esbuild 0.28.1 (下記詳細) | drizzle-kit が `serve` を呼ぶ使用に変化 / 経路が CI・deploy へ移動 / HIGH+ へ上方修正 or non-serve ベクタ追加 / `expired_at` 到達 | 2026-08-15 | [GHSA-67mh-4wv8-2f99](https://github.com/advisories/GHSA-67mh-4wv8-2f99) |
+| GHSA-67mh-4wv8-2f99 | esbuild@0.18.20 | drizzle-kit@0.31.10 > @esbuild-kit/esm-loader@2.6.5 > @esbuild-kit/core-utils@3.3.2 > esbuild@0.18.20 | 5.3 (M) | P3   | build 専用・`esbuild serve` 未使用・本番は patched esbuild 0.28.1 (下記詳細) | drizzle-kit が `serve` を呼ぶ使用に変化 / 経路が CI・deploy へ移動 / HIGH+ へ上方修正 or non-serve ベクタ追加 / `expired_at` 到達 | 2027-01-15 | [GHSA-67mh-4wv8-2f99](https://github.com/advisories/GHSA-67mh-4wv8-2f99) |
 
 ### GHSA-67mh-4wv8-2f99 — 判定詳細
 
@@ -88,32 +88,3 @@ CVSS は到達性を超えてティアを引き上げない (不到達の CVSS 1
 
 **期限前の自然修正見込み**: drizzle-kit が deprecated `@esbuild-kit/*` (`tsx` へ統合済)
 を除去、または grouped Dependabot が drizzle-kit を脆弱解決の先へ更新。
-
-## 台帳 (シークレット検出)
-
-シークレットスキャナの finding は脆弱性ティアの枠組みに乗らないため別掲。判定軸は
-「検出値が実際に秘匿すべき credential か」「露出した場合に何ができるか」の 2 点のみ。
-
-| rule id                  | path        | 判定   | 根拠                                                          | 再エスカレーション trigger                                                   | 期限       |
-| ------------------------ | ----------- | ------ | ------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------- |
-| stripe-publishable-token | `.cta.json` | 誤検知 | 実体は Clerk の publishable key。Stripe とは無関係 (下記詳細) | `.cta.json` に publishable key 以外の値が追加される / Clerk が pk を秘匿値化 | 2027-08-07 |
-
-### stripe-publishable-token — 判定詳細
-
-**Finding**: `.cta.json` の `envVarValues.VITE_CLERK_PUBLISHABLE_KEY` に
-`pk_test_…` が入っており、Trivy の `stripe-publishable-token` ルール (prefix `pk_test_` /
-`pk_live_` にマッチ) が反応する。
-
-- **Stripe の値か**: NO。`.cta.json` は create-tanstack-app のスキャフォールド記録で、
-  当該フィールドは Clerk の **publishable key**。base64 部をデコードすると
-  `current-snake-17.clerk.accounts.dev$` で Clerk dev インスタンスを指す。Stripe の
-  API キーは 1 つも存在しない。
-- **秘匿すべき値か**: NO。`VITE_` prefix が示すとおりクライアントバンドルに埋め込まれ、
-  ブラウザから誰でも読める公開識別子。Clerk の秘匿値は `CLERK_SECRET_KEY` (`sk_…`) 側で、
-  そちらは `.env.local` / Cloudflare secret にのみ存在しリポジトリに無い。
-- **露出した場合に何ができるか**: 実質何もできない。publishable key 単体では Backend API
-  を叩けず、許可オリジンは Clerk ダッシュボード側で制限される。かつ dev インスタンスの
-  鍵で本番インスタンスとは別物。
-
-**判定: 誤検知 — 期限付きサプレッション。** 値が公開前提である以上ローテーションも不要。
-`expired_at` で年 1 回再浮上させ、`.cta.json` の中身が変質していないか棚卸しする。

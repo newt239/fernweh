@@ -7,13 +7,4 @@ vulnerabilities:
       esbuild serve は未使用。Cloudflare Worker 本番バンドルは patched
       esbuild 0.28.1 を使用するため到達不能。詳細・再エスカレーション条件は
       .security/triage.md の GHSA-67mh-4wv8-2f99 行を参照。
-    expired_at: 2026-08-15
-secrets:
-  - id: stripe-publishable-token
-    paths:
-      - .cta.json
-    statement: >-
-      誤検知。実体は Clerk の publishable key で、クライアントバンドルに
-      埋め込まれる公開前提の値。Stripe のトークンではない。詳細は
-      .security/triage.md の stripe-publishable-token 行を参照。
-    expired_at: 2027-08-07
+    expired_at: 2027-01-15

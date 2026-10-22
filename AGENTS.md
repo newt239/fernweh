@@ -50,7 +50,7 @@ Node は `package.json` の `devEngines.runtime`、pnpm は `packageManager` で
 
 - `devEngines.runtime.onFail` は `ignore` にしてあります。`download` にしてはなりません。npm はバージョンが一致しないときだけ `onFail` を見ますが `download` を解釈できず `EBADDEVENGINES` で落ち、Workers Builds の deploy command が `npx wrangler` なのでデプロイが失敗します
 - pnpm 側の自動ダウンロードは `pnpm-workspace.yaml` の `runtimeOnFail: download` で維持しています。`pnpm install` が Node を取得してロックファイルに固定し、`pnpm run` 経由のコマンドがそのランタイムで動きます
-- pnpm 12 はネイティブバイナリのため、pnpm 11 以下は `packageManager` を見ても自動で切り替われず `SyntaxError` になります。手元の pnpm が 11 以下なら `curl -fsSL https://get.pnpm.io/install.sh | env PNPM_VERSION=12.11.2 sh -` で入れ直してください
+- pnpm 12 はネイティブバイナリのため、pnpm 11 以下は `packageManager` を見ても自動で切り替われず `SyntaxError` になります。手元の pnpm が 11 以下なら `curl -fsSL https://get.pnpm.io/install.sh | env PNPM_VERSION=12.14.0 sh -` で入れ直してください
 
 ### データベース
 

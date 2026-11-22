@@ -22,6 +22,13 @@ Node は `package.json` の `devEngines.runtime`、pnpm は `packageManager` で
 - Node の自動ダウンロードは `pnpm-workspace.yaml` の `runtimeOnFail: download` が担います
 - pnpm 12 はネイティブバイナリのため、pnpm 11 以下からは自動で切り替われず `SyntaxError` になります。`curl -fsSL https://get.pnpm.io/install.sh | env PNPM_VERSION=12.21.0 sh -` で入れ直してください
 
+## GitHub Actions
+
+- アクションは `uses: actions/checkout@v7.0.1` のようにタグで指定し、実行するコミットは `.github/workflows/actions.lock` で固定します
+- ワークフローを追加したり `uses` を変更したりしたら `gh actions-lock` を実行して lockfile を更新してください。拡張は `gh extension install github/gh-actions-lock --pin v0.2.0` で導入します
+- lockfile は手で編集してはなりません。CI の Actions Lock ワークフローが `gh actions-lock --verify` で整合性を検証します
+- `pnpm update` は `pnpm-workspace.yaml` の `update.githubActions` によりアクションのタグも更新します。更新後は `gh actions-lock` を実行してください
+
 ## データベース
 
 - `pnpm run db:generate` で `src/db/schema.ts` から `./drizzle` にマイグレーションを生成し、`pnpm wrangler d1 migrations apply photo --local` / `--remote` で適用します

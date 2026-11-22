@@ -18,7 +18,7 @@ import {
 import { useRouter } from "@tanstack/react-router";
 import { MapPinIcon, SearchCheckIcon } from "lucide-react";
 
-import { TimelineMatchMap } from "#/components/organisms/TimelineMatchMap";
+import { TimelineMatchMap } from "#/components/organisms/TimelineMatchMap/index.tsx";
 import { formatDateTime } from "#/lib/format.ts";
 import { photoImageUrl } from "#/lib/image-url.ts";
 import { matchTimeline, parseTimeline, type Timeline } from "#/lib/timeline.ts";

@@ -1,4 +1,4 @@
-import { PhotoCard, type PhotoCardData } from "#/components/molecules/PhotoCard";
+import { PhotoCard, type PhotoCardData } from "#/components/molecules/PhotoCard/index.tsx";
 import { masonryStyle } from "#/lib/masonry.ts";
 
 import classes from "./PhotoMasonry.module.css";

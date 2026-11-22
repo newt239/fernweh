@@ -3,9 +3,9 @@ import { useDisclosure } from "@mantine/hooks";
 import { createFileRoute, notFound, useLoaderData } from "@tanstack/react-router";
 import { z } from "zod";
 
-import { AlbumCard } from "#/components/molecules/AlbumCard";
-import { AlbumFilterBar, type AlbumFilters } from "#/components/molecules/AlbumFilterBar";
-import { FilterHeader } from "#/components/molecules/FilterHeader";
+import { AlbumCard } from "#/components/molecules/AlbumCard/index.tsx";
+import { AlbumFilterBar, type AlbumFilters } from "#/components/molecules/AlbumFilterBar/index.tsx";
+import { FilterHeader } from "#/components/molecules/FilterHeader/index.tsx";
 import { APP_NAME } from "#/lib/app.ts";
 import { listMyAlbums } from "#/server/albums.ts";
 

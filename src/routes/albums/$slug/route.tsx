@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-router";
 import { z } from "zod";
 
-import { AlbumViewerControls } from "#/components/organisms/AlbumViewerControls";
+import { AlbumViewerControls } from "#/components/organisms/AlbumViewerControls/index.tsx";
 import { env } from "#/env.ts";
 import { APP_NAME } from "#/lib/app.ts";
 import { formatAlbumPeriod } from "#/lib/format.ts";

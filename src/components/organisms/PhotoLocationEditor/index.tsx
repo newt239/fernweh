@@ -16,7 +16,7 @@ import {
 import { useRouter } from "@tanstack/react-router";
 import { MapPinIcon, MapPinOffIcon, SaveIcon, Undo2Icon, XIcon } from "lucide-react";
 
-import { LocationMap } from "#/components/molecules/LocationMap";
+import { LocationMap } from "#/components/molecules/LocationMap/index.tsx";
 import { DEFAULT_CENTER, DEFAULT_ZOOM } from "#/lib/leaflet.ts";
 import { updatePhotoLocation } from "#/server/photos.ts";
 

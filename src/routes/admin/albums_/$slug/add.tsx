@@ -4,8 +4,8 @@ import { Button, Group, Paper, Stack, Tabs, Text, Title } from "@mantine/core";
 import { Link, createFileRoute, notFound, useRouter } from "@tanstack/react-router";
 import { ArrowLeftIcon, PlusIcon } from "lucide-react";
 
-import { PhotoPicker } from "#/components/molecules/PhotoPicker";
-import { UploadDropzone } from "#/components/organisms/UploadDropzone";
+import { PhotoPicker } from "#/components/molecules/PhotoPicker/index.tsx";
+import { UploadDropzone } from "#/components/organisms/UploadDropzone/index.tsx";
 import { APP_NAME } from "#/lib/app.ts";
 import { addPhotosToAlbum, getAlbumBySlug } from "#/server/albums.ts";
 import { listMyPhotos } from "#/server/photo-list.ts";

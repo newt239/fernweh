@@ -4,7 +4,7 @@ import { Stack, Title } from "@mantine/core";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { PlusIcon } from "lucide-react";
 
-import { AlbumForm, type AlbumFormValues } from "#/components/organisms/AlbumForm";
+import { AlbumForm, type AlbumFormValues } from "#/components/organisms/AlbumForm/index.tsx";
 import { APP_NAME } from "#/lib/app.ts";
 import { createAlbum } from "#/server/albums.ts";
 

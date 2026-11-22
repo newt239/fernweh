@@ -28,8 +28,8 @@ import {
   ZoomOutIcon,
 } from "lucide-react";
 
-import { VisibilityIcon } from "#/components/atoms/VisibilityIcon";
-import { PhotoLocationEditor } from "#/components/organisms/PhotoLocationEditor";
+import { VisibilityIcon } from "#/components/atoms/VisibilityIcon/index.tsx";
+import { PhotoLocationEditor } from "#/components/organisms/PhotoLocationEditor/index.tsx";
 import { formatBytes, formatDateTime } from "#/lib/format.ts";
 import { photoImageUrl } from "#/lib/image-url.ts";
 import { photoDetailLink } from "#/lib/photo-link.ts";

@@ -2,7 +2,7 @@ import { useState, type ReactNode } from "react";
 
 import { Button, Group, Stack, Text, TextInput } from "@mantine/core";
 
-import { VisibilityControl } from "#/components/molecules/VisibilityControl";
+import { VisibilityControl } from "#/components/molecules/VisibilityControl/index.tsx";
 
 export type AlbumFormValues = {
   title: string;

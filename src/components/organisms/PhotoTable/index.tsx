@@ -8,7 +8,7 @@ import { photoDetailLink } from "#/lib/photo-link.ts";
 
 import classes from "./PhotoTable.module.css";
 
-import type { PhotoCardData } from "#/components/molecules/PhotoCard";
+import type { PhotoCardData } from "#/components/molecules/PhotoCard/index.tsx";
 
 type PhotoTableProps = {
   photos: PhotoCardData[];

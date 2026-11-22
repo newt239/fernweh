@@ -15,7 +15,7 @@ import {
 import { useRouter } from "@tanstack/react-router";
 import { SaveIcon, SparklesIcon } from "lucide-react";
 
-import { PhotoPreviewModal } from "#/components/molecules/PhotoPreviewModal";
+import { PhotoPreviewModal } from "#/components/molecules/PhotoPreviewModal/index.tsx";
 import { runConcurrently } from "#/lib/concurrent.ts";
 import { photoImageUrl } from "#/lib/image-url.ts";
 import { generatePhotoDraft } from "#/server/photo-draft.ts";

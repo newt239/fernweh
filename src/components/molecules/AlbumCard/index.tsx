@@ -1,7 +1,7 @@
 import { Card, Group, Text } from "@mantine/core";
 import { Link } from "@tanstack/react-router";
 
-import { VisibilityIcon } from "#/components/atoms/VisibilityIcon";
+import { VisibilityIcon } from "#/components/atoms/VisibilityIcon/index.tsx";
 import { photoImageUrl } from "#/lib/image-url.ts";
 
 import classes from "./AlbumCard.module.css";

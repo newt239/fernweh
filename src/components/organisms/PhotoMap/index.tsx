@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { thumbHashToDataURL } from "thumbhash";
 
-import { PhotoLightbox } from "#/components/organisms/PhotoLightbox";
+import { PhotoLightbox } from "#/components/organisms/PhotoLightbox/index.tsx";
 import { photoImageUrl } from "#/lib/image-url.ts";
 import { DEFAULT_CENTER, DEFAULT_ZOOM, addOsmTileLayer } from "#/lib/leaflet.ts";
 

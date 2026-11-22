@@ -7,6 +7,5 @@ export default defineConfig({
   plugins: [tanstackStart(), viteReact(), cloudflare({ viteEnvironment: { name: "ssr" } })],
   resolve: {
     dedupe: ["@clerk/react", "@clerk/shared", "@clerk/tanstack-react-start"],
-    tsconfigPaths: true,
   },
 });

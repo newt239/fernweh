@@ -4,14 +4,14 @@ import { Group, Text } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import { useRouter } from "@tanstack/react-router";
 
-import { PhotoViewControls } from "#/components/molecules/PhotoViewControls";
-import { PhotoBulkActions } from "#/components/organisms/PhotoBulkActions";
-import { PhotoMasonry } from "#/components/organisms/PhotoMasonry";
-import { PhotoTable } from "#/components/organisms/PhotoTable";
+import { PhotoViewControls } from "#/components/molecules/PhotoViewControls/index.tsx";
+import { PhotoBulkActions } from "#/components/organisms/PhotoBulkActions/index.tsx";
+import { PhotoMasonry } from "#/components/organisms/PhotoMasonry/index.tsx";
+import { PhotoTable } from "#/components/organisms/PhotoTable/index.tsx";
 import { addPhotosToAlbum, createAlbum, removePhotosFromAlbum } from "#/server/albums.ts";
 import { deletePhotos } from "#/server/photos.ts";
 
-import type { PhotoCardData } from "#/components/molecules/PhotoCard";
+import type { PhotoCardData } from "#/components/molecules/PhotoCard/index.tsx";
 
 type PhotoLibraryProps = {
   photos: PhotoCardData[];

@@ -81,6 +81,7 @@ RSC は存在しません。`"use client"` / `"use server"` / `import "server-on
 - コンポーネント名は所在ではなく役割で付けます（`PublicAlbumGallery` ではなく `PhotoGallery`）
 - 一覧の列数を JS の幅計測で決めてはなりません。SSR と列数がずれてちらつきます。列数ごとの位置を CSS カスタムプロパティで出力し、コンテナクエリで切り替えてください（例: `PhotoMasonry`）
 - 別ディレクトリのモジュールは相対パスではなく `#/`（`src/`）エイリアスでインポートしてください
+- `#/` は `package.json` の `imports` で `src/` にマップしており、`tsconfig.json` の `paths` は使いません。拡張子は補完されないため、`#/components/atoms/Notice/index.tsx` のようにファイル名と拡張子まで書いてください
 
 ## 不変条件（絶対に破らないこと）
 

@@ -3,9 +3,9 @@ import { useDisclosure } from "@mantine/hooks";
 import { createFileRoute, notFound, useLoaderData } from "@tanstack/react-router";
 import { z } from "zod";
 
-import { FilterHeader } from "#/components/molecules/FilterHeader";
-import { PhotoFilterBar, type PhotoFilters } from "#/components/molecules/PhotoFilterBar";
-import { PhotoLibrary } from "#/components/organisms/PhotoLibrary";
+import { FilterHeader } from "#/components/molecules/FilterHeader/index.tsx";
+import { PhotoFilterBar, type PhotoFilters } from "#/components/molecules/PhotoFilterBar/index.tsx";
+import { PhotoLibrary } from "#/components/organisms/PhotoLibrary/index.tsx";
 import { APP_NAME } from "#/lib/app.ts";
 import { listCameraModels, listMyPhotos } from "#/server/photo-list.ts";
 

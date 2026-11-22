@@ -5,9 +5,12 @@ import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { useRouter } from "@tanstack/react-router";
 import { EraserIcon, SaveIcon, SparklesIcon } from "lucide-react";
 
-import { PhotoPreviewModal } from "#/components/molecules/PhotoPreviewModal";
-import { TimeZoneSelect } from "#/components/molecules/TimeZoneSelect";
-import { UploadDraftRow, type UploadDraftItem } from "#/components/molecules/UploadDraftRow";
+import { PhotoPreviewModal } from "#/components/molecules/PhotoPreviewModal/index.tsx";
+import { TimeZoneSelect } from "#/components/molecules/TimeZoneSelect/index.tsx";
+import {
+  UploadDraftRow,
+  type UploadDraftItem,
+} from "#/components/molecules/UploadDraftRow/index.tsx";
 import { runConcurrently } from "#/lib/concurrent.ts";
 import { extractExif, probeDimensions } from "#/lib/image.ts";
 import { encodeThumbHash } from "#/lib/thumbhash.ts";

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { Notice } from "#/components/atoms/Notice";
-import { AlbumMasonry } from "#/components/organisms/AlbumMasonry";
+import { Notice } from "#/components/atoms/Notice/index.tsx";
+import { AlbumMasonry } from "#/components/organisms/AlbumMasonry/index.tsx";
 import { env } from "#/env.ts";
 import { listPublicAlbums } from "#/server/public.ts";
 

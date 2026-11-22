@@ -4,7 +4,7 @@ import { Link } from "@tanstack/react-router";
 import { LayoutGridIcon, Share2Icon } from "lucide-react";
 import { thumbHashToDataURL } from "thumbhash";
 
-import { PhotoLightbox } from "#/components/organisms/PhotoLightbox";
+import { PhotoLightbox } from "#/components/organisms/PhotoLightbox/index.tsx";
 import { photoImageUrl, photoSrcSet } from "#/lib/image-url.ts";
 import { masonryStyle } from "#/lib/masonry.ts";
 

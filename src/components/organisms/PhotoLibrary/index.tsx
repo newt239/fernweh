@@ -90,9 +90,10 @@ export const PhotoLibrary = ({
     setNotice(null);
     try {
       await action();
-    } finally {
-      setSubmitting(false);
+    } catch (error_) {
+      setError(error_ instanceof Error ? error_.message : String(error_));
     }
+    setSubmitting(false);
   };
 
   const handleRemove = async (target: { id: string }) => {

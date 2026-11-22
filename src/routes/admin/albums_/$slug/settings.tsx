@@ -49,9 +49,8 @@ const AlbumSettingsPage = () => {
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : String(error));
       closeDelete();
-    } finally {
-      setDeleting(false);
     }
+    setDeleting(false);
   };
 
   const handleSubmit = async (values: AlbumFormValues) => {
@@ -87,9 +86,8 @@ const AlbumSettingsPage = () => {
       }
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : String(error));
-    } finally {
-      setSubmitting(false);
     }
+    setSubmitting(false);
   };
 
   return (

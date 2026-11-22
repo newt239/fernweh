@@ -29,15 +29,14 @@ type PhotoLightboxProps = {
 
 export const PhotoLightbox = ({ photos, index, onClose, onIndexChange }: PhotoLightboxProps) => {
   const photo = index === null ? undefined : photos[index];
-  const { canvasRef, reset, scale, stageProps, stageRef, transform, zoomTo } = usePhotoZoom(
-    photo?.id ?? null,
-  );
+  const { canvasRef, reset, scale, stageProps, stageRef, zoomTo } = usePhotoZoom(photo?.id ?? null);
+  const placeholder = photo?.placeholder ?? null;
   const blur = useMemo(
     () =>
-      photo?.placeholder
-        ? thumbHashToDataURL(Uint8Array.from(atob(photo.placeholder), (c) => c.codePointAt(0) ?? 0))
+      placeholder
+        ? thumbHashToDataURL(Uint8Array.from(atob(placeholder), (c) => c.codePointAt(0) ?? 0))
         : null,
-    [photo?.placeholder],
+    [placeholder],
   );
 
   const handleClose = () => {
@@ -93,7 +92,7 @@ export const PhotoLightbox = ({ photos, index, onClose, onIndexChange }: PhotoLi
             </button>
 
             <div ref={stageRef} className={classes.stage} {...stageProps}>
-              <div ref={canvasRef} className={classes.canvas} style={{ transform }}>
+              <div ref={canvasRef} className={classes.canvas}>
                 <img
                   className={classes.image}
                   src={photoImageUrl(photo.storageKey, 2048)}

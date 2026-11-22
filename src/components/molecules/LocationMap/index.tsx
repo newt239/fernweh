@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-import { addOsmTileLayer } from "#/lib/leaflet.ts";
+import { addOsmTileLayer, loadLeaflet } from "#/lib/leaflet.ts";
 
 import classes from "./LocationMap.module.css";
 
@@ -18,12 +18,16 @@ export const LocationMap = ({ latitude, longitude, zoom, onChange }: LocationMap
   const mapRef = useRef<Leaflet.Map | null>(null);
   const markerRef = useRef<Leaflet.CircleMarker | null>(null);
   const latestRef = useRef({ latitude, longitude, onChange, zoom });
-  latestRef.current = { latitude, longitude, onChange, zoom };
+
+  // 地図のイベントから最新の props を参照するため描画のたびに ref へ同期する
+  useEffect(() => {
+    latestRef.current = { latitude, longitude, onChange, zoom };
+  });
 
   // Leaflet は window に依存し SSR では読み込めないため、マウント後に動的 import して地図を生成する
   useEffect(() => {
     let cancelled = false;
-    import("leaflet").then((leaflet) => {
+    loadLeaflet().then((leaflet) => {
       const container = containerRef.current;
       if (cancelled || !container) {
         return;

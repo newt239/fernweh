@@ -29,17 +29,16 @@ const NewAlbumPage = () => {
           visibility: values.visibility,
         },
       });
-      if (!result.success) {
+      if (result.success) {
+        await router.navigate({ params: { slug: result.slug }, to: "/admin/albums/$slug" });
+        await router.invalidate();
+      } else {
         setErrorMessage(result.error);
-        return;
       }
-      await router.navigate({ params: { slug: result.slug }, to: "/admin/albums/$slug" });
-      await router.invalidate();
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : String(error));
-    } finally {
-      setSubmitting(false);
     }
+    setSubmitting(false);
   };
 
   return (

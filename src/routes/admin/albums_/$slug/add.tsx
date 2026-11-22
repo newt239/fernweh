@@ -50,9 +50,10 @@ const AlbumAddPhotosPage = () => {
       } else {
         setError(result.error);
       }
-    } finally {
-      setSubmitting(false);
+    } catch (error_) {
+      setError(error_ instanceof Error ? error_.message : String(error_));
     }
+    setSubmitting(false);
   };
 
   return (

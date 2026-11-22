@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useLayoutEffect, useRef, useState } from "react";
 
 export const usePhotoZoom = (photoKey: string | null) => {
   const [scale, setScale] = useState(1);
@@ -82,24 +82,38 @@ export const usePhotoZoom = (photoKey: string | null) => {
       : null;
   };
 
+  const handleWheel = useEffectEvent((event: WheelEvent) => {
+    if (!event.ctrlKey) {
+      return;
+    }
+    event.preventDefault();
+    const delta = (event.deltaY || event.deltaX) * (event.deltaMode === 0 ? 1 : 16);
+    const step = Math.min(25, Math.max(-25, delta)) / 100;
+    zoomTo(viewRef.current.scale * Math.exp(-step), {
+      x: event.clientX,
+      y: event.clientY,
+    });
+  });
+
   // React の onWheel は passive で登録され preventDefault が効かないため直接登録する
   useEffect(() => {
-    const stage = stageRef.current;
-    const handleWheel = (event: WheelEvent) => {
-      if (!event.ctrlKey) {
-        return;
-      }
-      event.preventDefault();
-      const delta = (event.deltaY || event.deltaX) * (event.deltaMode === 0 ? 1 : 16);
-      const step = Math.min(25, Math.max(-25, delta)) / 100;
-      zoomTo(viewRef.current.scale * Math.exp(-step), {
-        x: event.clientX,
-        y: event.clientY,
-      });
+    const stage = photoKey === null ? null : stageRef.current;
+    const listener = (event: WheelEvent) => {
+      handleWheel(event);
     };
-    stage?.addEventListener("wheel", handleWheel, { passive: false });
-    return () => stage?.removeEventListener("wheel", handleWheel);
+    stage?.addEventListener("wheel", listener, { passive: false });
+    return () => {
+      stage?.removeEventListener("wheel", listener);
+    };
   }, [photoKey]);
+
+  // 描画中に ref を読めないため、要素が作り直されても表示位置が残るよう描画後に書き戻す
+  useLayoutEffect(() => {
+    const { scale: currentScale, x, y } = viewRef.current;
+    if (canvasRef.current) {
+      canvasRef.current.style.transform = `translate(${x}px, ${y}px) scale(${currentScale})`;
+    }
+  });
 
   return {
     canvasRef,
@@ -161,7 +175,6 @@ export const usePhotoZoom = (photoKey: string | null) => {
       onPointerUp: endPointer,
     },
     stageRef,
-    transform: `translate(${viewRef.current.x}px, ${viewRef.current.y}px) scale(${viewRef.current.scale})`,
     zoomTo,
   };
 };

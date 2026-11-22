@@ -71,9 +71,8 @@ export const PhotoLocationEditor = ({ photoId, latitude, longitude, altitude }: 
       }
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : String(error));
-    } finally {
-      setPending(null);
     }
+    setPending(null);
   };
 
   return (

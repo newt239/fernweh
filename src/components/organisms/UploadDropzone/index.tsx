@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useEffectEvent, useState } from "react";
 
 import { Button, Group, Paper, Stack, Table, Text } from "@mantine/core";
 import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
@@ -86,7 +86,8 @@ export const UploadDropzone = ({ onComplete }: { onComplete?: (photoIds: string[
         method: "PUT",
       });
       if (!uploaded.ok) {
-        throw new Error(`R2_PUT_FAILED_${uploaded.status}`);
+        updateItem(id, { error: `R2_PUT_FAILED_${uploaded.status}`, status: "error" });
+        return null;
       }
 
       updateItem(id, { progress: 85, status: "saving" });
@@ -150,10 +151,13 @@ export const UploadDropzone = ({ onComplete }: { onComplete?: (photoIds: string[
       }
       await router.invalidate();
       onComplete?.(uploadedIds);
-    } finally {
-      setBusy(false);
+    } catch (error) {
+      console.error(error);
     }
+    setBusy(false);
   };
+
+  const importShared = useEffectEvent(handleDrop);
 
   // 共有シートから受け取ったファイルは Service Worker が Cache API に退避している
   useEffect(() => {
@@ -175,10 +179,8 @@ export const UploadDropzone = ({ onComplete }: { onComplete?: (photoIds: string[
       );
       // 再読み込みで二重にアップロードされないよう取り込む前に消す
       await Promise.all(keys.map((key) => cache.delete(key)));
-      await handleDrop(files.filter((file) => file !== null));
+      await importShared(files.filter((file) => file !== null));
     });
-    // マウント時に一度だけ取り込むため handleDrop は依存に含めない
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const generateOne = async (id: string, photoId: string, field: "caption" | "alt") => {
@@ -207,9 +209,10 @@ export const UploadDropzone = ({ onComplete }: { onComplete?: (photoIds: string[
     setGeneratingField(field);
     try {
       await runConcurrently(editable, 3, (it) => generateOne(it.id, it.photoId, field));
-    } finally {
-      setGeneratingField(null);
+    } catch (error) {
+      console.error(error);
     }
+    setGeneratingField(null);
   };
 
   const saveAll = async () => {
@@ -245,9 +248,10 @@ export const UploadDropzone = ({ onComplete }: { onComplete?: (photoIds: string[
           }
         }
       }
-    } finally {
-      setSavingAll(false);
+    } catch (error) {
+      console.error(error);
     }
+    setSavingAll(false);
   };
 
   return (

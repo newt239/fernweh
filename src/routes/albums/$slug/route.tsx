@@ -5,7 +5,7 @@ import {
   useMatchRoute,
   useNavigate,
 } from "@tanstack/react-router";
-import { z } from "zod";
+import * as z from "zod";
 
 import { AlbumViewerControls } from "#/components/organisms/AlbumViewerControls/index.tsx";
 import { env } from "#/env.ts";

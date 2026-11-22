@@ -3,7 +3,7 @@ import { env } from "cloudflare:workers";
 import { and, asc, desc, eq, inArray, like, sql, type SQL } from "drizzle-orm";
 import { drizzle, type DrizzleD1Database } from "drizzle-orm/d1";
 import { nanoid } from "nanoid";
-import { z } from "zod";
+import * as z from "zod";
 
 import * as schema from "#/db/schema.ts";
 import { albumPhotos, albums, photos } from "#/db/schema.ts";

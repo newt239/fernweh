@@ -1,7 +1,7 @@
 import { SimpleGrid, Stack, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { createFileRoute, notFound, useLoaderData } from "@tanstack/react-router";
-import { z } from "zod";
+import * as z from "zod";
 
 import { AlbumCard } from "#/components/molecules/AlbumCard/index.tsx";
 import { AlbumFilterBar, type AlbumFilters } from "#/components/molecules/AlbumFilterBar/index.tsx";

@@ -1,7 +1,7 @@
 import { Group, Pagination, Stack, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { createFileRoute, notFound, useLoaderData } from "@tanstack/react-router";
-import { z } from "zod";
+import * as z from "zod";
 
 import { FilterHeader } from "#/components/molecules/FilterHeader/index.tsx";
 import { PhotoFilterBar, type PhotoFilters } from "#/components/molecules/PhotoFilterBar/index.tsx";

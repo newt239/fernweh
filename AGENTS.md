@@ -95,6 +95,7 @@ RSC は存在しません。`"use client"` / `"use server"` / `import "server-on
 ## API 規約
 
 - search params は `validateSearch` + zod でバリデーションする
+- zod は `import * as z from "zod"` でインポートする
 - server function は `createServerFn().validator().handler()` で定義し、エラーはスローせず `{ success: false, error: "..." } as const` などの結果オブジェクトで返す
 - Drizzle の `sql` で相関サブクエリを書くときは `${table}.col` と修飾する。`${table.col}` は非修飾になり JOIN 先の列に解決されることがある
 

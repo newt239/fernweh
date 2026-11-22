@@ -3,8 +3,8 @@ import { useMemo } from "react";
 import { createFileRoute, useLoaderData } from "@tanstack/react-router";
 import leafletCss from "leaflet/dist/leaflet.css?url";
 
-import { Notice } from "#/components/atoms/Notice";
-import { PhotoMap } from "#/components/organisms/PhotoMap";
+import { Notice } from "#/components/atoms/Notice/index.tsx";
+import { PhotoMap } from "#/components/organisms/PhotoMap/index.tsx";
 
 const PublicAlbumMapPage = () => {
   const { photos } = useLoaderData({ from: "/albums/$slug" });

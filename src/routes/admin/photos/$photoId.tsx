@@ -1,8 +1,8 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import leafletCss from "leaflet/dist/leaflet.css?url";
-import { z } from "zod";
+import * as z from "zod";
 
-import { PhotoDetailView } from "#/components/organisms/PhotoDetailView";
+import { PhotoDetailView } from "#/components/organisms/PhotoDetailView/index.tsx";
 import { APP_NAME } from "#/lib/app.ts";
 import { getPhoto } from "#/server/photos.ts";
 

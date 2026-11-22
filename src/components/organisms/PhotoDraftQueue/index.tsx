@@ -15,7 +15,7 @@ import {
 import { useRouter } from "@tanstack/react-router";
 import { SaveIcon, SparklesIcon } from "lucide-react";
 
-import { PhotoPreviewModal } from "#/components/molecules/PhotoPreviewModal";
+import { PhotoPreviewModal } from "#/components/molecules/PhotoPreviewModal/index.tsx";
 import { runConcurrently } from "#/lib/concurrent.ts";
 import { photoImageUrl } from "#/lib/image-url.ts";
 import { generatePhotoDraft } from "#/server/photo-draft.ts";
@@ -86,9 +86,10 @@ export const PhotoDraftQueue = ({ photos, total, field, onFieldChange }: PhotoDr
         3,
         (id) => generateOne(id, field),
       );
-    } finally {
-      setGenerating(false);
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : String(error));
     }
+    setGenerating(false);
   };
 
   const saveAll = async () => {
@@ -114,9 +115,8 @@ export const PhotoDraftQueue = ({ photos, total, field, onFieldChange }: PhotoDr
       }
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : String(error));
-    } finally {
-      setSaving(false);
     }
+    setSaving(false);
   };
 
   return (

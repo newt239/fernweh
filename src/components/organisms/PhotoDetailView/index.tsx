@@ -28,8 +28,8 @@ import {
   ZoomOutIcon,
 } from "lucide-react";
 
-import { VisibilityIcon } from "#/components/atoms/VisibilityIcon";
-import { PhotoLocationEditor } from "#/components/organisms/PhotoLocationEditor";
+import { VisibilityIcon } from "#/components/atoms/VisibilityIcon/index.tsx";
+import { PhotoLocationEditor } from "#/components/organisms/PhotoLocationEditor/index.tsx";
 import { formatBytes, formatDateTime } from "#/lib/format.ts";
 import { photoImageUrl } from "#/lib/image-url.ts";
 import { photoDetailLink } from "#/lib/photo-link.ts";
@@ -133,9 +133,7 @@ export const PhotoDetailView = ({ photo, albumSlug, order, previousId, nextId }:
     fileRows.push({ label: "アップロード日時", value: uploaded });
   }
 
-  const { canvasRef, reset, scale, stageProps, stageRef, transform, zoomTo } = usePhotoZoom(
-    photo.id,
-  );
+  const { canvasRef, reset, scale, stageProps, stageRef, zoomTo } = usePhotoZoom(photo.id);
   const [caption, setCaption] = useState(photo.caption ?? "");
   const [alt, setAlt] = useState(photo.alt ?? "");
   const [submitting, setSubmitting] = useState(false);
@@ -178,9 +176,8 @@ export const PhotoDetailView = ({ photo, albumSlug, order, previousId, nextId }:
       }
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : String(error));
-    } finally {
-      setGenerating(false);
     }
+    setGenerating(false);
   };
 
   const handleSubmit = async () => {
@@ -204,9 +201,8 @@ export const PhotoDetailView = ({ photo, albumSlug, order, previousId, nextId }:
       }
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : String(error));
-    } finally {
-      setSubmitting(false);
     }
+    setSubmitting(false);
   };
 
   const listLink =
@@ -292,7 +288,7 @@ export const PhotoDetailView = ({ photo, albumSlug, order, previousId, nextId }:
       <div className={classes.layout}>
         <div className={classes.viewer}>
           <div ref={stageRef} className={classes.stage} {...stageProps}>
-            <div ref={canvasRef} className={classes.canvas} style={{ transform }}>
+            <div ref={canvasRef} className={classes.canvas}>
               <img
                 src={imageSrc}
                 alt={alt || caption || ""}

@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { env } from "cloudflare:workers";
 import { and, eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { z } from "zod";
+import * as z from "zod";
 
 import * as schema from "#/db/schema.ts";
 import { photos } from "#/db/schema.ts";

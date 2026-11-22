@@ -18,7 +18,7 @@ import {
 import { useRouter } from "@tanstack/react-router";
 import { MapPinIcon, SearchCheckIcon } from "lucide-react";
 
-import { TimelineMatchMap } from "#/components/organisms/TimelineMatchMap";
+import { TimelineMatchMap } from "#/components/organisms/TimelineMatchMap/index.tsx";
 import { formatDateTime } from "#/lib/format.ts";
 import { photoImageUrl } from "#/lib/image-url.ts";
 import { matchTimeline, parseTimeline, type Timeline } from "#/lib/timeline.ts";
@@ -109,14 +109,13 @@ export const TimelineGeotagPanel = ({ photos }: Props) => {
       const parsed = parseTimeline(await file.text());
       if (parsed.samples.length === 0 && parsed.visits.length === 0) {
         setErrorMessage("このファイルからは位置情報の記録が見つかりませんでした");
-        return;
+      } else {
+        setTimeline(parsed);
       }
-      setTimeline(parsed);
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : String(error));
-    } finally {
-      setParsing(false);
     }
+    setParsing(false);
   };
 
   const handleApply = async () => {
@@ -128,6 +127,7 @@ export const TimelineGeotagPanel = ({ photos }: Props) => {
     setResultMessage(null);
     try {
       let updated = 0;
+      let failure: string | null = null;
       for (let index = 0; index < selected.length; index += 100) {
         const items = selected.slice(index, index + 100).map((row) => ({
           id: row.photo.id,
@@ -137,22 +137,25 @@ export const TimelineGeotagPanel = ({ photos }: Props) => {
         // 1 リクエストあたりの件数を抑えるため分割して順に送信する
         const result = await applyPhotoLocations({ data: { items } });
         if (!result.success) {
-          setErrorMessage(result.error);
-          return;
+          failure = result.error;
+          break;
         }
         updated += result.updated;
       }
-      setResultMessage(`${updated} 件の写真に位置情報を設定しました`);
-      setTimeline(null);
-      setFile(null);
-      setExcludedIds(new Set());
-      setFocusedId(null);
-      await router.invalidate();
+      if (failure === null) {
+        setResultMessage(`${updated} 件の写真に位置情報を設定しました`);
+        setTimeline(null);
+        setFile(null);
+        setExcludedIds(new Set());
+        setFocusedId(null);
+        await router.invalidate();
+      } else {
+        setErrorMessage(failure);
+      }
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : String(error));
-    } finally {
-      setApplying(false);
     }
+    setApplying(false);
   };
 
   return (

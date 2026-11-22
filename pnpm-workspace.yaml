@@ -10,4 +10,9 @@ allowBuilds:
 saveExact: true
 minimumReleaseAge: 10080
 minimumReleaseAgeExcludePrune: true
+minimumReleaseAgeExclude:
+  - "@pnpm/exe.*"
 runtimeOnFail: download
+update:
+  githubActions: true
+verifyDepsBeforeRun: false

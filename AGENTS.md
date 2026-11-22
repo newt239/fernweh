@@ -20,7 +20,15 @@ Node は `package.json` の `devEngines.runtime`、pnpm は `packageManager` で
 
 - `devEngines.runtime.onFail` を `download` にしてはなりません。npm は `download` を解釈できず `EBADDEVENGINES` で落ち、`npx wrangler` を使う Workers Builds のデプロイが失敗します
 - Node の自動ダウンロードは `pnpm-workspace.yaml` の `runtimeOnFail: download` が担います
-- pnpm 12 はネイティブバイナリのため、pnpm 11 以下からは自動で切り替われず `SyntaxError` になります。`curl -fsSL https://get.pnpm.io/install.sh | env PNPM_VERSION=12.14.0 sh -` で入れ直してください
+- `verifyDepsBeforeRun` は `false` にしています。`onFail` が `ignore` だと pnpm が lockfile と不一致とみなし、`pnpm run` のたびに警告を出して install し直すためです。依存を更新したら `pnpm install` を手で実行してください
+- pnpm 12 はネイティブバイナリのため、pnpm 11 以下からは自動で切り替われず `SyntaxError` になります。`curl -fsSL https://get.pnpm.io/install.sh | env PNPM_VERSION=12.21.0 sh -` で入れ直してください
+
+## GitHub Actions
+
+- アクションは `uses: actions/checkout@v7.0.1` のようにタグで指定し、実行するコミットは `.github/workflows/actions.lock` で固定します
+- ワークフローを追加したり `uses` を変更したりしたら `gh actions-lock` を実行して lockfile を更新してください。拡張は `gh extension install github/gh-actions-lock --pin v0.2.0` で導入します
+- lockfile は手で編集してはなりません。CI の Actions Lock ワークフローが `gh actions-lock --verify` で整合性を検証します
+- `pnpm update` は `pnpm-workspace.yaml` の `update.githubActions` によりアクションのタグも更新します。更新後は `gh actions-lock` を実行してください
 
 ## データベース
 
@@ -74,6 +82,7 @@ RSC は存在しません。`"use client"` / `"use server"` / `import "server-on
 - コンポーネント名は所在ではなく役割で付けます（`PublicAlbumGallery` ではなく `PhotoGallery`）
 - 一覧の列数を JS の幅計測で決めてはなりません。SSR と列数がずれてちらつきます。列数ごとの位置を CSS カスタムプロパティで出力し、コンテナクエリで切り替えてください（例: `PhotoMasonry`）
 - 別ディレクトリのモジュールは相対パスではなく `#/`（`src/`）エイリアスでインポートしてください
+- `#/` は `package.json` の `imports` で `src/` にマップしており、`tsconfig.json` の `paths` は使いません。拡張子は補完されないため、`#/components/atoms/Notice/index.tsx` のようにファイル名と拡張子まで書いてください
 
 ## 不変条件（絶対に破らないこと）
 
@@ -87,6 +96,9 @@ RSC は存在しません。`"use client"` / `"use server"` / `import "server-on
 ## API 規約
 
 - search params は `validateSearch` + zod でバリデーションする
+- zod は `import * as z from "zod"` でインポートする
+- 検証は server function の入力・search params・外部サービスの応答など信頼境界で行い、型の付いた内部の値は再検証しない
+- 整数は `z.int()`、日時文字列は `z.iso.datetime()` のようにトップレベルの API で書く
 - server function は `createServerFn().validator().handler()` で定義し、エラーはスローせず `{ success: false, error: "..." } as const` などの結果オブジェクトで返す
 - Drizzle の `sql` で相関サブクエリを書くときは `${table}.col` と修飾する。`${table.col}` は非修飾になり JOIN 先の列に解決されることがある
 

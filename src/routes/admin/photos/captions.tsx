@@ -1,8 +1,8 @@
 import { Stack, Text, Title } from "@mantine/core";
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { z } from "zod";
+import * as z from "zod";
 
-import { PhotoDraftQueue } from "#/components/organisms/PhotoDraftQueue";
+import { PhotoDraftQueue } from "#/components/organisms/PhotoDraftQueue/index.tsx";
 import { APP_NAME } from "#/lib/app.ts";
 import { listMyPhotos } from "#/server/photo-list.ts";
 

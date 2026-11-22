@@ -7,11 +7,15 @@
       "Bash(grep:*)",
       "Bash(gh pr create:*)",
       "Bash(gh issue *)",
-      "Bash(gh pr *)"
+      "Bash(gh pr *)",
+      "Bash(git checkout:*)",
+      "Bash(git merge:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(rm:*)"
     ],
     "deny": [
-      "Bash(git reset:*)",
-      "Bash(git rebase:*)",
       "Read(.env)",
       "Read(*.env)",
       "Read(.env.local)",
@@ -38,14 +42,7 @@
       "Bash(bat *.env)",
       "Bash(bat *.env.local)"
     ],
-    "ask": [
-      "Bash(git checkout:*)",
-      "Bash(git merge:*)",
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(git push:*)",
-      "Bash(rm:*)"
-    ]
+    "ask": ["Bash(git reset:*)", "Bash(git rebase:*)"]
   },
   "enabledPlugins": {
     "github@claude-plugins-official": true

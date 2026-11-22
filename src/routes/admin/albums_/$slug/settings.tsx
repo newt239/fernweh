@@ -15,8 +15,8 @@ import { useDisclosure } from "@mantine/hooks";
 import { Link, createFileRoute, notFound, useRouter } from "@tanstack/react-router";
 import { ArrowLeftIcon, SaveIcon, Trash2Icon, XIcon } from "lucide-react";
 
-import { AlbumCover } from "#/components/organisms/AlbumCover";
-import { AlbumForm, type AlbumFormValues } from "#/components/organisms/AlbumForm";
+import { AlbumCover } from "#/components/organisms/AlbumCover/index.tsx";
+import { AlbumForm, type AlbumFormValues } from "#/components/organisms/AlbumForm/index.tsx";
 import { APP_NAME } from "#/lib/app.ts";
 import { deleteAlbum, getAlbumBySlug, updateAlbum } from "#/server/albums.ts";
 
@@ -49,9 +49,8 @@ const AlbumSettingsPage = () => {
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : String(error));
       closeDelete();
-    } finally {
-      setDeleting(false);
     }
+    setDeleting(false);
   };
 
   const handleSubmit = async (values: AlbumFormValues) => {
@@ -87,9 +86,8 @@ const AlbumSettingsPage = () => {
       }
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : String(error));
-    } finally {
-      setSubmitting(false);
     }
+    setSubmitting(false);
   };
 
   return (

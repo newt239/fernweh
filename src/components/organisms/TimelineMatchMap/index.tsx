@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import { DEFAULT_CENTER, DEFAULT_ZOOM, addOsmTileLayer } from "#/lib/leaflet.ts";
+import { DEFAULT_CENTER, DEFAULT_ZOOM, addOsmTileLayer, loadLeaflet } from "#/lib/leaflet.ts";
 
 import classes from "./TimelineMatchMap.module.css";
 
@@ -33,7 +33,7 @@ export const TimelineMatchMap = ({ points, focusedId }: Props) => {
     const markers = markersRef.current;
     let cancelled = false;
     let map: Leaflet.Map | null = null;
-    import("leaflet").then((leaflet) => {
+    loadLeaflet().then((leaflet) => {
       const container = containerRef.current;
       if (cancelled || !container) {
         return;

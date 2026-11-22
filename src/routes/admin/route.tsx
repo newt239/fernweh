@@ -2,8 +2,8 @@ import { AppShell, Burger, Group, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Link, Outlet, createFileRoute, redirect } from "@tanstack/react-router";
 
-import { AdminNavbar } from "#/components/organisms/AdminNavbar";
-import { KeyboardShortcutHelp } from "#/components/organisms/KeyboardShortcutHelp";
+import { AdminNavbar } from "#/components/organisms/AdminNavbar/index.tsx";
+import { KeyboardShortcutHelp } from "#/components/organisms/KeyboardShortcutHelp/index.tsx";
 import { APP_NAME } from "#/lib/app.ts";
 import { listMyAlbums } from "#/server/albums.ts";
 

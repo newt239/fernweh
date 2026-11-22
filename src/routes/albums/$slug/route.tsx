@@ -5,9 +5,9 @@ import {
   useMatchRoute,
   useNavigate,
 } from "@tanstack/react-router";
-import { z } from "zod";
+import * as z from "zod";
 
-import { AlbumViewerControls } from "#/components/organisms/AlbumViewerControls";
+import { AlbumViewerControls } from "#/components/organisms/AlbumViewerControls/index.tsx";
 import { env } from "#/env.ts";
 import { APP_NAME } from "#/lib/app.ts";
 import { formatAlbumPeriod } from "#/lib/format.ts";
@@ -87,5 +87,5 @@ export const Route = createFileRoute("/albums/$slug")({
     }
     return result;
   },
-  validateSearch: z.object({ size: z.number().int().min(1).max(12).optional() }),
+  validateSearch: z.object({ size: z.int().min(1).max(12).optional() }),
 });

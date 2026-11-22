@@ -1,9 +1,9 @@
 import { Group, Stack, Text, Title } from "@mantine/core";
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SignOutButton } from "#/components/atoms/SignOutButton";
-import { ColorSchemeControl } from "#/components/molecules/ColorSchemeControl";
-import { UserProfile } from "#/components/molecules/UserProfile";
+import { SignOutButton } from "#/components/atoms/SignOutButton/index.tsx";
+import { ColorSchemeControl } from "#/components/molecules/ColorSchemeControl/index.tsx";
+import { UserProfile } from "#/components/molecules/UserProfile/index.tsx";
 import { APP_NAME } from "#/lib/app.ts";
 
 const SettingsPage = () => (

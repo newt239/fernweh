@@ -3,7 +3,7 @@ import mantineChartsCss from "@mantine/charts/styles.css?url";
 import { Paper, SimpleGrid, Stack, Text, Title } from "@mantine/core";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 
-import { Notice } from "#/components/atoms/Notice";
+import { Notice } from "#/components/atoms/Notice/index.tsx";
 import { APP_NAME } from "#/lib/app.ts";
 import { formatBytes } from "#/lib/format.ts";
 import { getPhotoStats } from "#/server/stats.ts";

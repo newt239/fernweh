@@ -1,10 +1,10 @@
 import { ActionIcon, Button, Group, Stack, Text, Title, Tooltip } from "@mantine/core";
 import { Link, createFileRoute, notFound, useLoaderData } from "@tanstack/react-router";
 import { ExternalLinkIcon, ImagePlusIcon, SettingsIcon } from "lucide-react";
-import { z } from "zod";
+import * as z from "zod";
 
-import { VisibilityIcon } from "#/components/atoms/VisibilityIcon";
-import { PhotoLibrary } from "#/components/organisms/PhotoLibrary";
+import { VisibilityIcon } from "#/components/atoms/VisibilityIcon/index.tsx";
+import { PhotoLibrary } from "#/components/organisms/PhotoLibrary/index.tsx";
 import { APP_NAME } from "#/lib/app.ts";
 import { formatAlbumPeriod } from "#/lib/format.ts";
 import { getAlbumBySlug } from "#/server/albums.ts";

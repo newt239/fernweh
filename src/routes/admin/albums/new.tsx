@@ -4,7 +4,7 @@ import { Stack, Title } from "@mantine/core";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { PlusIcon } from "lucide-react";
 
-import { AlbumForm, type AlbumFormValues } from "#/components/organisms/AlbumForm";
+import { AlbumForm, type AlbumFormValues } from "#/components/organisms/AlbumForm/index.tsx";
 import { APP_NAME } from "#/lib/app.ts";
 import { createAlbum } from "#/server/albums.ts";
 
@@ -29,17 +29,16 @@ const NewAlbumPage = () => {
           visibility: values.visibility,
         },
       });
-      if (!result.success) {
+      if (result.success) {
+        await router.navigate({ params: { slug: result.slug }, to: "/admin/albums/$slug" });
+        await router.invalidate();
+      } else {
         setErrorMessage(result.error);
-        return;
       }
-      await router.navigate({ params: { slug: result.slug }, to: "/admin/albums/$slug" });
-      await router.invalidate();
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : String(error));
-    } finally {
-      setSubmitting(false);
     }
+    setSubmitting(false);
   };
 
   return (

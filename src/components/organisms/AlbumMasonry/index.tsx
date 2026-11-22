@@ -26,24 +26,16 @@ export const AlbumMasonry = ({ albums }: { albums: AlbumMasonryItem[] }) => {
     canvas: classes.canvas,
     item: classes.item,
   });
-  const blurs = useMemo(
-    () =>
-      new Map(
-        albums.flatMap((album) =>
-          album.coverPlaceholder
-            ? [
-                [
-                  album.id,
-                  thumbHashToDataURL(
-                    Uint8Array.from(atob(album.coverPlaceholder), (c) => c.codePointAt(0) ?? 0),
-                  ),
-                ] as const,
-              ]
-            : [],
-        ),
-      ),
-    [albums],
-  );
+  const blurs = useMemo(() => {
+    const urls = new Map<string, string>();
+    for (const album of albums) {
+      if (album.coverPlaceholder) {
+        const bytes = Uint8Array.from(atob(album.coverPlaceholder), (c) => c.codePointAt(0) ?? 0);
+        urls.set(album.id, thumbHashToDataURL(bytes));
+      }
+    }
+    return urls;
+  }, [albums]);
 
   return (
     <div className={classes.gallery}>

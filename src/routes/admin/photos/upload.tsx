@@ -1,7 +1,7 @@
 import { Paper, Stack, Title } from "@mantine/core";
 import { createFileRoute } from "@tanstack/react-router";
 
-import { UploadDropzone } from "#/components/organisms/UploadDropzone";
+import { UploadDropzone } from "#/components/organisms/UploadDropzone/index.tsx";
 import { APP_NAME } from "#/lib/app.ts";
 
 const PhotosUploadPage = () => (

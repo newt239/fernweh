@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react";
 
 import { thumbHashToDataURL } from "thumbhash";
 
-import { PhotoLightbox } from "#/components/organisms/PhotoLightbox";
+import { PhotoLightbox } from "#/components/organisms/PhotoLightbox/index.tsx";
 import { photoImageUrl } from "#/lib/image-url.ts";
-import { DEFAULT_CENTER, DEFAULT_ZOOM, addOsmTileLayer } from "#/lib/leaflet.ts";
+import { DEFAULT_CENTER, DEFAULT_ZOOM, addOsmTileLayer, loadLeaflet } from "#/lib/leaflet.ts";
 
 import classes from "./PhotoMap.module.css";
 
@@ -48,7 +48,7 @@ export const PhotoMap = ({ photos }: { photos: PhotoMapItem[] }) => {
       },
       { root: containerRef.current, rootMargin: "128px" },
     );
-    import("leaflet").then((leaflet) => {
+    loadLeaflet().then((leaflet) => {
       const container = containerRef.current;
       if (cancelled || !container) {
         return;

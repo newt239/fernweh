@@ -149,7 +149,7 @@ export const updateAlbum = createServerFn({ method: "POST" })
 export const listMyAlbums = createServerFn({ method: "GET" })
   .validator(
     z.object({
-      limit: z.number().int().positive().max(200).optional(),
+      limit: z.int().positive().max(200).optional(),
       q: z.string().max(100).optional(),
       year: z
         .string()

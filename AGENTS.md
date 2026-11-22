@@ -96,6 +96,8 @@ RSC は存在しません。`"use client"` / `"use server"` / `import "server-on
 
 - search params は `validateSearch` + zod でバリデーションする
 - zod は `import * as z from "zod"` でインポートする
+- 検証は server function の入力・search params・外部サービスの応答など信頼境界で行い、型の付いた内部の値は再検証しない
+- 整数は `z.int()`、日時文字列は `z.iso.datetime()` のようにトップレベルの API で書く
 - server function は `createServerFn().validator().handler()` で定義し、エラーはスローせず `{ success: false, error: "..." } as const` などの結果オブジェクトで返す
 - Drizzle の `sql` で相関サブクエリを書くときは `${table}.col` と修飾する。`${table.col}` は非修飾になり JOIN 先の列に解決されることがある
 

@@ -94,8 +94,8 @@ const searchSchema = z.object({
     .regex(/^\d{4}-(?:0[1-9]|1[0-2])$/)
     .optional(),
   order: z.enum(["asc", "desc"]).default("desc"),
-  page: z.number().int().min(1).catch(1).default(1),
-  perPage: z.number().int().min(12).max(200).catch(60).default(60),
+  page: z.int().min(1).catch(1).default(1),
+  perPage: z.int().min(12).max(200).catch(60).default(60),
   q: z.string().max(100).optional(),
   view: z.enum(["grid", "table"]).default("grid"),
 });

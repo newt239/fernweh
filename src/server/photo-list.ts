@@ -38,13 +38,13 @@ const listMyPhotosInput = z.object({
   album: z.string().optional(),
   camera: z.string().optional(),
   geo: z.enum(["with", "without"]).optional(),
-  limit: z.number().int().positive().max(200).default(60),
+  limit: z.int().positive().max(200).default(60),
   missing: z.enum(["caption", "alt"]).optional(),
   month: z
     .string()
     .regex(/^\d{4}-(?:0[1-9]|1[0-2])$/)
     .optional(),
-  offset: z.number().int().min(0).default(0),
+  offset: z.int().min(0).default(0),
   order: z.enum(["asc", "desc"]).default("desc"),
   q: z.string().max(100).optional(),
 });

@@ -18,7 +18,7 @@ const R2_DELETE_CHUNK_SIZE = 1000;
 const createPhotoUploadInput = z.object({
   contentHash: z.string().regex(/^[0-9a-f]{64}$/),
   contentType: z.enum(ALLOWED_MIME_TYPES),
-  size: z.number().int().positive().max(MAX_FILE_SIZE),
+  size: z.int().positive().max(MAX_FILE_SIZE),
 });
 
 export const createPhotoUpload = createServerFn({ method: "POST" })
@@ -50,23 +50,23 @@ const finalizePhotoInput = z.object({
   cameraMake: z.string().nullable().optional(),
   cameraModel: z.string().nullable().optional(),
   contentHash: z.string().regex(/^[0-9a-f]{64}$/),
-  fileSize: z.number().int().positive().max(MAX_FILE_SIZE),
+  fileSize: z.int().positive().max(MAX_FILE_SIZE),
   focalLength: z.number().nullable().optional(),
-  height: z.number().int().positive(),
-  iso: z.number().int().nullable().optional(),
+  height: z.int().positive(),
+  iso: z.int().nullable().optional(),
   latitude: z.number().nullable().optional(),
   lensModel: z.string().nullable().optional(),
   longitude: z.number().nullable().optional(),
   mimeType: z.enum(ALLOWED_MIME_TYPES),
-  orientation: z.number().int().nullable().optional(),
+  orientation: z.int().nullable().optional(),
   originalKey: z.string().min(1),
   photoId: z.string().min(1),
   placeholder: z.string().max(64).nullable().optional(),
   rawExif: z.string().nullable().optional(),
   shutterSpeed: z.string().nullable().optional(),
-  takenAt: z.string().datetime().nullable().optional(),
-  takenAtOffsetMinutes: z.number().int().min(-720).max(840).nullable().optional(),
-  width: z.number().int().positive(),
+  takenAt: z.iso.datetime().nullable().optional(),
+  takenAtOffsetMinutes: z.int().min(-720).max(840).nullable().optional(),
+  width: z.int().positive(),
 });
 
 export const finalizePhoto = createServerFn({ method: "POST" })
@@ -258,7 +258,7 @@ export const getPhoto = createServerFn({ method: "GET" })
 export const missingLocation = or(isNull(photos.latitude), isNull(photos.longitude));
 
 export const listPhotosMissingLocation = createServerFn({ method: "GET" })
-  .validator(z.object({ limit: z.number().int().positive().max(1000).optional() }))
+  .validator(z.object({ limit: z.int().positive().max(1000).optional() }))
   .handler(async ({ data }) => {
     const userId = await getCurrentUserId();
     if (!userId) {

@@ -20,6 +20,7 @@ Node は `package.json` の `devEngines.runtime`、pnpm は `packageManager` で
 
 - `devEngines.runtime.onFail` を `download` にしてはなりません。npm は `download` を解釈できず `EBADDEVENGINES` で落ち、`npx wrangler` を使う Workers Builds のデプロイが失敗します
 - Node の自動ダウンロードは `pnpm-workspace.yaml` の `runtimeOnFail: download` が担います
+- `verifyDepsBeforeRun` は `false` にしています。`onFail` が `ignore` だと pnpm が lockfile と不一致とみなし、`pnpm run` のたびに警告を出して install し直すためです。依存を更新したら `pnpm install` を手で実行してください
 - pnpm 12 はネイティブバイナリのため、pnpm 11 以下からは自動で切り替われず `SyntaxError` になります。`curl -fsSL https://get.pnpm.io/install.sh | env PNPM_VERSION=12.21.0 sh -` で入れ直してください
 
 ## GitHub Actions
